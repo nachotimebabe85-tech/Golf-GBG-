@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golf Weekend med Grabbarna ⛳️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-dark: #0a0f0d;
+            --card-bg: rgba(18, 26, 22, 0.85);
+            --accent-gold: #d4af37;
+            --accent-gold-hover: #f3e5ab;
+            --golf-green: #1b4332;
+            --text-light: #f0f3f1;
+            --text-muted: #a0ada7;
+            --border-color: rgba(212, 175, 55, 0.25);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(27, 67, 50, 0.4) 0%, transparent 70%),
+                radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+            overflow-x: hidden;
+        }
+
+        /* --- NAME MODAL --- */
+        #nameModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 15, 13, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 40px 30px;
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+        }
+
+        .modal-content i.fa-flag-usa {
+            font-size: 3rem;
+            color: var(--accent-gold);
+            margin-bottom: 15px;
+        }
+
+        .modal-content h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        .modal-content p {
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: rgba(255,255,255,0.05);
+            color: #fff;
+            font-size: 1rem;
+            text-align: center;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-gold {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #d4af37 0%, #aa820a 100%);
+            color: #0a0f0d;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.5);
+            background: linear-gradient(135deg, #f3e5ab 0%, #d4af37 100%);
+        }
+
+        /* --- MAIN SITE --- */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px 100px 20px;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .container.visible {
+            opacity: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header .badge {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        header p.greeting {
+            font-size: 1.2rem;
+            color: var(--accent-gold);
+            font-weight: 600;
+        }
+
+        /* --- VIDEO SECTION --- */
+        .video-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            overflow: hidden;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .video-container video, 
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* --- TIMELINE --- */
+        .timeline-header {
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            color: var(--accent-gold);
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 50px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent-gold) 0%, rgba(212, 175, 55, 0.1) 100%);
+        }
+
+        .day-block {
+            position: relative;
+            margin-bottom: 35px;
+        }
+
+        .day-badge {
+            position: absolute;
+            left: -30px;
+            top: 0;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--golf-green);
+            border: 2px solid var(--accent-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-gold);
+            font-size: 1rem;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+
+        .day-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 20px;
+            margin-left: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        .day-card h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--accent-gold);
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .event-list {
+            list-style: none;
+        }
+
+        .event-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            color: var(--text-light);
+        }
+
+        .event-item i {
+            color: var(--accent-gold);
+            margin-top: 4px;
+            width: 18px;
+            text-align: center;
+        }
+
+        /* --- RSVP FLOATING BAR --- */
+        .rsvp-section {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 15, 13, 0.92);
+            backdrop-filter: blur(15px);
+            border-top: 1px solid var(--border-color);
+            padding: 15px 20px;
+            z-index: 100;
+            text-align: center;
+        }
+
+        .rsvp-btn {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+            background: linear-gradient(135deg, #d4af37 0%, #aa820a 100%);
+            color: #0a0f0d;
+            font-weight: 700;
+            padding: 16px 24px;
+            border-radius: 50px;
+            font-size: 1rem;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .rsvp-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.6);
+        }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.8rem; }
+            .timeline { padding-left: 20px; }
+            .day-card { margin-left: 10px; padding: 15px; }
+            .rsvp-btn { font-size: 0.9rem; padding: 14px 18px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="nameModal">
+        <div class="modal-content">
+            <i class="fa-solid fa-golf-ball-tee"></i>
+            <h2>GOLF WEEKEND 2026</h2>
+            <p>Mata in ditt namn för att låsa upp inbjudan och schemat.</p>
+            <form id="nameForm" onsubmit="unlockSite(event)">
+                <div class="input-group">
+                    <input type="text" id="userNameInput" placeholder="Ditt Namn..." required autocomplete="off">
+                </div>
+                <button type="submit" class="btn-gold">Lås upp Inbjudan <i class="fa-solid fa-unlock"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <div class="container" id="mainContainer">
+        
+        <header>
+            <div class="badge"><i class="fa-regular fa-calendar-days"></i> 18 SEPT - 20 SEPT</div>
+            <h1 id="welcomeTitle">GOLF WEEKEND GÖTEBORG</h1>
+            <p class="greeting" id="personalizedGreeting"></p>
+        </header>
+
+        <div class="video-card">
+            <div class="video-container">
+                <video controls autoplay muted loop playsinline>
+                    <source src="http://googleusercontent.com/generated_video_content/3380348090024272114" type="video/mp4">
+                    Din webbläsare stöder inte videouppspelning.
+                </video>
+            </div>
+        </div>
+
+        <h2 class="timeline-header"><i class="fa-solid fa-map-location-dot"></i> HELGSCHEMA</h2>
+        
+        <div class="timeline">
+
+            <div class="day-block">
+                <div class="day-badge"><i class="fa-solid fa-car"></i></div>
+                <div class="day-card">
+                    <h3>Fredag 18 Sept</h3>
+                    <ul class="event-list">
+                        <li class="event-item">
+                            <i class="fa-solid fa-road"></i>
+                            <span><strong>Afterwork & Avfärd:</strong> Bilresa från Stockholm mot Göteborg.</span>
+                        </li>
+                        <li class="event-item">
+                            <i class="fa-solid fa-utensils"></i>
+                            <span><strong>Ankomst & Middag:</strong> Mat & Dryck i Göteborg.</span>
+                        </li>
+                        <li class="event-item">
+                            <i class="fa-solid fa-champagne-glasses"></i>
+                            <span><strong>Nattklubb:</strong> Party på <em>Port du Soleil</em> (eller motsvarande klubb).</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="day-block">
+                <div class="day-badge"><i class="fa-solid fa-flag"></i></div>
+                <div class="day-card">
+                    <h3>Lördag 19 Sept</h3>
+                    <ul class="event-list">
+                        <li class="event-item">
+                            <i class="fa-solid fa-mug-hot"></i>
+                            <span><strong>Morgon:</strong> Frukost & laddning.</span>
+                        </li>
+                        <li class="event-item">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            <span><strong>Dormy World of Golf:</strong> Traditionell gear-restock & nyinköp.</span>
+                        </li>
+                        <li class="event-item">
+                            <i class="fa-solid fa-golf-ball-tee"></i>
+                            <span><strong>18 Hål Golf:</strong> Vallda GK eller Hills Golf Club.</span>
+                        </li>
+                        <li class="event-item">
+                            <i class="fa-solid fa-beer-mug-empty"></i>
+                            <span><strong>Kväll:</strong> Trevlig middag & Ölkväll.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="day-block">
+                <div class="day-badge"><i class="fa-solid fa-trophy"></i></div>
+                <div class="day-card">
+                    <h3>Söndag 20 Sept</h3>
+                    <ul class="event-list">
+                        <li class="event-item">
+                            <i class="fa-solid fa-utensils"></i>
+                            <span><strong>Morgon:</strong> Frukost.</span>
+                        </li>
+                        <li class="event-item">
+                            <i class="fa-solid fa-golf-ball-tee"></i>
+                            <span><strong>Sista Rundan:</strong> Stannum GK.</span>
+                        </li>
+                        <li class="event-item">
+                            <i class="fa-solid fa-award"></i>
+                            <span><strong>Prisutdelning:</strong> Korande av helgens mästare!</span>
+                        </li>
+                        <li class="event-item">
+                            <i class="fa-solid fa-house"></i>
+                            <span><strong>Hemfärd:</strong> Tillbaka till Stockholm.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="rsvp-section">
+        <a id="smsLink" href="#" class="rsvp-btn">
+            <i class="fa-solid fa-paper-plane"></i>
+            <span>Svara William ifall du kan eller inte (först till kvarn)</span>
+        </a>
+    </div>
+
+    <script>
+        let visitorName = "";
+
+        function unlockSite(e) {
+            e.preventDefault();
+            const input = document.getElementById('userNameInput');
+            visitorName = input.value.trim();
+
+            if (visitorName) {
+                // Hide modal
+                document.getElementById('nameModal').style.display = 'none';
+                
+                // Show container
+                const container = document.getElementById('mainContainer');
+                container.classList.add('visible');
+
+                // Personalize text
+                document.getElementById('personalizedGreeting').innerText = `Välkommen ${visitorName}!`;
+
+                // Update SMS Link
+                const phoneNumber = "0727055996";
+                const message = encodeURIComponent(`Tjena William! Det är ${visitorName}. Angående Golf Weekend (18-20 Sept): `);
+                document.getElementById('smsLink').href = `sms:${phoneNumber}?body=${message}`;
+            }
+        }
+    </script>
+</body>
+</html>
