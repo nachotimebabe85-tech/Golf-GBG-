@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Golf Weekend med Grabbarna ⛳️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>GÖTEBORG INVITATIONAL '26</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            --bg-dark: #0a0f0d;
-            --card-bg: rgba(18, 26, 22, 0.85);
-            --accent-gold: #d4af37;
-            --accent-gold-hover: #f3e5ab;
-            --golf-green: #1b4332;
-            --text-light: #f0f3f1;
-            --text-muted: #a0ada7;
-            --border-color: rgba(212, 175, 55, 0.25);
+            --bg-dark: #0d0d0d;
+            --card-bg: #1a1a1a;
+            --accent-volt: #ccff00; /* Electric modern golf green */
+            --accent-volt-hover: #e0ff4d;
+            --text-light: #f4f4f4;
+            --text-muted: #888888;
+            --border-color: #333333;
         }
 
         * {
@@ -31,10 +30,15 @@
             color: var(--text-light);
             line-height: 1.6;
             min-height: 100vh;
-            background-image: 
-                radial-gradient(circle at 50% 0%, rgba(27, 67, 50, 0.4) 0%, transparent 70%),
-                radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
             overflow-x: hidden;
+            background-image: linear-gradient(180deg, #0d0d0d 0%, #11140e 100%);
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
         }
 
         /* --- NAME MODAL --- */
@@ -44,8 +48,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(10, 15, 13, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(13, 13, 13, 0.95);
+            backdrop-filter: blur(12px);
             z-index: 9999;
             display: flex;
             align-items: center;
@@ -55,31 +59,33 @@
 
         .modal-content {
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 40px 30px;
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 50px 30px;
             max-width: 450px;
             width: 100%;
             text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
         }
 
-        .modal-content i.fa-flag-usa {
+        .modal-content .icon-wrap {
             font-size: 3rem;
-            color: var(--accent-gold);
-            margin-bottom: 15px;
+            color: var(--accent-volt);
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(204, 255, 0, 0.3);
         }
 
         .modal-content h2 {
-            font-family: 'Cinzel', serif;
-            font-size: 1.8rem;
-            color: var(--accent-gold);
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--text-light);
             margin-bottom: 10px;
+            line-height: 1.1;
         }
 
         .modal-content p {
             color: var(--text-muted);
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             font-size: 0.95rem;
         }
 
@@ -89,49 +95,51 @@
 
         .input-group input {
             width: 100%;
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            background: rgba(255,255,255,0.05);
+            padding: 16px;
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            background: #000;
             color: #fff;
-            font-size: 1rem;
+            font-size: 1.1rem;
+            font-weight: 700;
             text-align: center;
+            text-transform: uppercase;
             outline: none;
             transition: all 0.3s ease;
         }
 
         .input-group input:focus {
-            border-color: var(--accent-gold);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+            border-color: var(--accent-volt);
+            box-shadow: 0 0 15px rgba(204, 255, 0, 0.15);
         }
 
-        .btn-gold {
+        .btn-volt {
             width: 100%;
-            padding: 15px;
+            padding: 16px;
             border: none;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #d4af37 0%, #aa820a 100%);
-            color: #0a0f0d;
-            font-size: 1rem;
-            font-weight: 700;
+            border-radius: 8px;
+            background: var(--accent-volt);
+            color: #000;
+            font-size: 1.1rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
             cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
         }
 
-        .btn-gold:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.5);
-            background: linear-gradient(135deg, #f3e5ab 0%, #d4af37 100%);
+        .btn-volt:hover {
+            transform: translateY(-3px);
+            background: var(--accent-volt-hover);
+            box-shadow: 0 10px 25px rgba(204, 255, 0, 0.4);
         }
 
         /* --- MAIN SITE --- */
         .container {
-            max-width: 800px;
+            max-width: 700px;
             margin: 0 auto;
-            padding: 40px 20px 100px 20px;
+            padding: 50px 20px 120px 20px;
             opacity: 0;
             transition: opacity 0.8s ease;
         }
@@ -142,150 +150,168 @@
 
         header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
         }
 
         header .badge {
             display: inline-block;
-            background: rgba(212, 175, 55, 0.15);
-            border: 1px solid var(--accent-gold);
-            color: var(--accent-gold);
+            background: #000;
+            border: 1px solid var(--accent-volt);
+            color: var(--accent-volt);
             padding: 6px 16px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-            letter-spacing: 1px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
         }
 
         header h1 {
-            font-family: 'Cinzel', serif;
-            font-size: 2.5rem;
+            font-size: 3.5rem;
+            font-weight: 900;
             color: var(--text-light);
             margin-bottom: 10px;
-            line-height: 1.2;
+            line-height: 1;
         }
 
         header p.greeting {
             font-size: 1.2rem;
-            color: var(--accent-gold);
-            font-weight: 600;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-top: 15px;
+        }
+        
+        header p.greeting span {
+            color: var(--accent-volt);
+            font-weight: 700;
         }
 
         /* --- VIDEO SECTION --- */
         .video-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 15px;
-            margin-bottom: 40px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-            overflow: hidden;
+            background: #000;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 10px;
+            margin-bottom: 60px;
+            position: relative;
+        }
+        
+        /* Little edgy tape/design detail */
+        .video-card::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            width: 40px;
+            height: 20px;
+            background: var(--accent-volt);
+            z-index: 10;
         }
 
         .video-container {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            padding-bottom: 56.25%;
             height: 0;
-            border-radius: 12px;
+            border-radius: 8px;
             overflow: hidden;
         }
 
-        .video-container video, 
-        .video-container iframe {
+        .video-container video {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             border: none;
+            object-fit: cover;
         }
 
         /* --- TIMELINE --- */
         .timeline-header {
-            text-align: center;
-            font-family: 'Cinzel', serif;
-            color: var(--accent-gold);
-            font-size: 1.8rem;
-            margin-bottom: 30px;
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .timeline-header i {
+            color: var(--accent-volt);
         }
 
         .timeline {
             position: relative;
-            padding-left: 30px;
+            padding-left: 20px;
             margin-bottom: 50px;
         }
 
         .timeline::before {
             content: '';
             position: absolute;
-            left: 10px;
+            left: 0;
             top: 0;
             bottom: 0;
-            width: 2px;
-            background: linear-gradient(180deg, var(--accent-gold) 0%, rgba(212, 175, 55, 0.1) 100%);
+            width: 3px;
+            background: var(--border-color);
         }
 
         .day-block {
             position: relative;
-            margin-bottom: 35px;
+            margin-bottom: 50px;
         }
 
         .day-badge {
             position: absolute;
-            left: -30px;
+            left: -20px;
             top: 0;
             transform: translateX(-50%);
-            width: 40px;
-            height: 40px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
-            background: var(--golf-green);
-            border: 2px solid var(--accent-gold);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--accent-gold);
-            font-size: 1rem;
-            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+            background: var(--accent-volt);
+            border: 4px solid var(--bg-dark);
         }
 
         .day-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 15px;
-            padding: 20px;
             margin-left: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
         }
 
         .day-card h3 {
-            font-family: 'Cinzel', serif;
-            color: var(--accent-gold);
-            font-size: 1.3rem;
-            margin-bottom: 12px;
+            color: var(--accent-volt);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        
+        .day-card h3 span {
+            font-size: 0.9rem;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-muted);
+        }
+
+        .event-item {
+            margin-bottom: 25px;
+        }
+        
+        .event-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 5px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .event-list {
-            list-style: none;
-        }
-
-        .event-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: 10px;
+        .event-desc {
             font-size: 0.95rem;
-            color: var(--text-light);
-        }
-
-        .event-item i {
-            color: var(--accent-gold);
-            margin-top: 4px;
-            width: 18px;
-            text-align: center;
+            color: var(--text-muted);
+            padding-left: 26px;
         }
 
         /* --- RSVP FLOATING BAR --- */
@@ -294,42 +320,44 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: rgba(10, 15, 13, 0.92);
-            backdrop-filter: blur(15px);
+            background: rgba(13, 13, 13, 0.85);
+            backdrop-filter: blur(20px);
             border-top: 1px solid var(--border-color);
-            padding: 15px 20px;
+            padding: 20px;
             z-index: 100;
             text-align: center;
         }
 
         .rsvp-btn {
-            max-width: 500px;
+            max-width: 600px;
             margin: 0 auto;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 12px;
             text-decoration: none;
-            background: linear-gradient(135deg, #d4af37 0%, #aa820a 100%);
-            color: #0a0f0d;
-            font-weight: 700;
-            padding: 16px 24px;
-            border-radius: 50px;
-            font-size: 1rem;
-            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+            background: var(--accent-volt);
+            color: #000;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            padding: 18px 24px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
             transition: all 0.3s ease;
         }
 
         .rsvp-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.6);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(204, 255, 0, 0.3);
         }
 
         @media (max-width: 600px) {
-            header h1 { font-size: 1.8rem; }
-            .timeline { padding-left: 20px; }
-            .day-card { margin-left: 10px; padding: 15px; }
-            .rsvp-btn { font-size: 0.9rem; padding: 14px 18px; }
+            header h1 { font-size: 2.5rem; }
+            .timeline-header { font-size: 1.8rem; }
+            .day-card h3 { flex-direction: column; gap: 5px; }
+            .rsvp-btn { font-size: 0.9rem; padding: 15px 10px; }
+            .modal-content { padding: 40px 20px; }
         }
     </style>
 </head>
@@ -337,14 +365,14 @@
 
     <div id="nameModal">
         <div class="modal-content">
-            <i class="fa-solid fa-golf-ball-tee"></i>
-            <h2>GOLF WEEKEND 2026</h2>
-            <p>Mata in ditt namn för att låsa upp inbjudan och schemat.</p>
+            <div class="icon-wrap"><i class="fa-solid fa-flag-checkered"></i></div>
+            <h2>THE GÖTEBORG INVITATIONAL</h2>
+            <p>Vi närmar oss 30. Du behöver den här helgen. Identifiera dig själv för att se agendan.</p>
             <form id="nameForm" onsubmit="unlockSite(event)">
                 <div class="input-group">
-                    <input type="text" id="userNameInput" placeholder="Ditt Namn..." required autocomplete="off">
+                    <input type="text" id="userNameInput" placeholder="DITT NAMN" required autocomplete="off">
                 </div>
-                <button type="submit" class="btn-gold">Lås upp Inbjudan <i class="fa-solid fa-unlock"></i></button>
+                <button type="submit" class="btn-volt">SLÄPP IN MIG <i class="fa-solid fa-arrow-right"></i></button>
             </form>
         </div>
     </div>
@@ -352,8 +380,8 @@
     <div class="container" id="mainContainer">
         
         <header>
-            <div class="badge"><i class="fa-regular fa-calendar-days"></i> 18 SEPT - 20 SEPT</div>
-            <h1 id="welcomeTitle">GOLF WEEKEND GÖTEBORG</h1>
+            <div class="badge">18 - 20 September 2026</div>
+            <h1>OPERATION:<br>GÖTEBORG</h1>
             <p class="greeting" id="personalizedGreeting"></p>
         </header>
 
@@ -366,78 +394,71 @@
             </div>
         </div>
 
-        <h2 class="timeline-header"><i class="fa-solid fa-map-location-dot"></i> HELGSCHEMA</h2>
+        <h2 class="timeline-header"><i class="fa-solid fa-route"></i> MASTER PLAN</h2>
         
         <div class="timeline">
 
             <div class="day-block">
-                <div class="day-badge"><i class="fa-solid fa-car"></i></div>
+                <div class="day-badge"></div>
                 <div class="day-card">
-                    <h3>Fredag 18 Sept</h3>
-                    <ul class="event-list">
-                        <li class="event-item">
-                            <i class="fa-solid fa-road"></i>
-                            <span><strong>Afterwork & Avfärd:</strong> Bilresa från Stockholm mot Göteborg.</span>
-                        </li>
-                        <li class="event-item">
-                            <i class="fa-solid fa-utensils"></i>
-                            <span><strong>Ankomst & Middag:</strong> Mat & Dryck i Göteborg.</span>
-                        </li>
-                        <li class="event-item">
-                            <i class="fa-solid fa-champagne-glasses"></i>
-                            <span><strong>Nattklubb:</strong> Party på <em>Port du Soleil</em> (eller motsvarande klubb).</span>
-                        </li>
-                    </ul>
+                    <h3>FREDAG <span>18 SEPT</span></h3>
+                    
+                    <div class="event-item">
+                        <div class="event-title"><i class="fa-solid fa-car-side"></i> Flykten från Stockholm</div>
+                        <div class="event-desc">Datorn stängs, bilarna rullar västerut. P3 Dokumentär och oundvikligt bilkö-snack.</div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-title"><i class="fa-solid fa-burger"></i> Käk & Laddning</div>
+                        <div class="event-desc">Ankomst till Götet. Vi droppar väskorna, hugger något bra att äta och etablerar bas.</div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-title"><i class="fa-solid fa-compact-disc"></i> Dimman (Port Du Soleil)</div>
+                        <div class="event-desc">Vätskekontroll, tveksamma beslut och stans bästa (eller stökigaste) nattklubb. Vi kör.</div>
+                    </div>
                 </div>
             </div>
 
             <div class="day-block">
-                <div class="day-badge"><i class="fa-solid fa-flag"></i></div>
+                <div class="day-badge"></div>
                 <div class="day-card">
-                    <h3>Lördag 19 Sept</h3>
-                    <ul class="event-list">
-                        <li class="event-item">
-                            <i class="fa-solid fa-mug-hot"></i>
-                            <span><strong>Morgon:</strong> Frukost & laddning.</span>
-                        </li>
-                        <li class="event-item">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                            <span><strong>Dormy World of Golf:</strong> Traditionell gear-restock & nyinköp.</span>
-                        </li>
-                        <li class="event-item">
-                            <i class="fa-solid fa-golf-ball-tee"></i>
-                            <span><strong>18 Hål Golf:</strong> Vallda GK eller Hills Golf Club.</span>
-                        </li>
-                        <li class="event-item">
-                            <i class="fa-solid fa-beer-mug-empty"></i>
-                            <span><strong>Kväll:</strong> Trevlig middag & Ölkväll.</span>
-                        </li>
-                    </ul>
+                    <h3>LÖRDAG <span>19 SEPT</span></h3>
+                    
+                    <div class="event-item">
+                        <div class="event-title"><i class="fa-solid fa-ghost"></i> Överlevnad & Frukost</div>
+                        <div class="event-desc">Svart kaffe. Resorb. Vi pratar inte om igår förrän efter kl 10.</div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-title"><i class="fa-solid fa-credit-card"></i> Plånbokens Begravning (Dormy)</div>
+                        <div class="event-desc">Obligatorisk gear-restock. Nya Pro V1:or att slå bort i skogen och kläder vi tror ska sänka vårt hcp.</div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-title"><i class="fa-solid fa-golf-ball-tee"></i> Verklighetschecken (18 Hål)</div>
+                        <div class="event-desc">Vallda GK eller Hills. Dags att backa upp skitsnacket från igår på riktigt gräs.</div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-title"><i class="fa-solid fa-beer-mug-empty"></i> Terapi & Humle</div>
+                        <div class="event-desc">Riktigt bra middag. Bärs, lögner om hur långt vi drev på hål 14, och allmänt häng.</div>
+                    </div>
                 </div>
             </div>
 
             <div class="day-block">
-                <div class="day-badge"><i class="fa-solid fa-trophy"></i></div>
+                <div class="day-badge"></div>
                 <div class="day-card">
-                    <h3>Söndag 20 Sept</h3>
-                    <ul class="event-list">
-                        <li class="event-item">
-                            <i class="fa-solid fa-utensils"></i>
-                            <span><strong>Morgon:</strong> Frukost.</span>
-                        </li>
-                        <li class="event-item">
-                            <i class="fa-solid fa-golf-ball-tee"></i>
-                            <span><strong>Sista Rundan:</strong> Stannum GK.</span>
-                        </li>
-                        <li class="event-item">
-                            <i class="fa-solid fa-award"></i>
-                            <span><strong>Prisutdelning:</strong> Korande av helgens mästare!</span>
-                        </li>
-                        <li class="event-item">
-                            <i class="fa-solid fa-house"></i>
-                            <span><strong>Hemfärd:</strong> Tillbaka till Stockholm.</span>
-                        </li>
-                    </ul>
+                    <h3>SÖNDAG <span>20 SEPT</span></h3>
+                    
+                    <div class="event-item">
+                        <div class="event-title"><i class="fa-solid fa-skull"></i> Domedagen (Stannum GK)</div>
+                        <div class="event-desc">Sista 18. Det är nu agnarna sållas från vetet. Vinn eller försvinn.</div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-title"><i class="fa-solid fa-crown"></i> Kröningsceremoni</div>
+                        <div class="event-desc">Prisutdelning. Vem tar pokalen och vem får swisha vinnaren?</div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-title"><i class="fa-solid fa-house"></i> Reträtt</div>
+                        <div class="event-desc">Bilarna rullar tillbaka till verkligheten i Stockholm.</div>
+                    </div>
                 </div>
             </div>
 
@@ -447,8 +468,8 @@
 
     <div class="rsvp-section">
         <a id="smsLink" href="#" class="rsvp-btn">
-            <i class="fa-solid fa-paper-plane"></i>
-            <span>Svara William ifall du kan eller inte (först till kvarn)</span>
+            <i class="fa-solid fa-mobile-screen"></i>
+            <span>JAG ÄR PÅ (FÖRST TILL KVARN)</span>
         </a>
     </div>
 
@@ -458,7 +479,7 @@
         function unlockSite(e) {
             e.preventDefault();
             const input = document.getElementById('userNameInput');
-            visitorName = input.value.trim();
+            visitorName = input.value.trim().toUpperCase();
 
             if (visitorName) {
                 // Hide modal
@@ -469,11 +490,11 @@
                 container.classList.add('visible');
 
                 // Personalize text
-                document.getElementById('personalizedGreeting').innerText = `Välkommen ${visitorName}!`;
+                document.getElementById('personalizedGreeting').innerHTML = `Tjena <span>${visitorName}</span>. Packa klubborna, det är dags.`;
 
-                // Update SMS Link
+                // Update SMS Link with a bit of attitude
                 const phoneNumber = "0727055996";
-                const message = encodeURIComponent(`Tjena William! Det är ${visitorName}. Angående Golf Weekend (18-20 Sept): `);
+                const message = encodeURIComponent(`Tjena William! Det är ${visitorName}. Skriv upp mig på Göteborg 18-20 Sept. Jag är redo att dominera (och leta boll i skogen).`);
                 document.getElementById('smsLink').href = `sms:${phoneNumber}?body=${message}`;
             }
         }
