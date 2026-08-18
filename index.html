@@ -3,254 +3,243 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GÖTEBORG INVITATIONAL - VIRTUELL RESA</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+    <title>GÖTEBORG INVITATIONAL '26</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         :root {
-            --accent: #ccff00; /* Volt Green */
-            --bg: #050505;
+            --bg-dark: #000a12; /* Djupblå natt */
+            --card-bg: #001729; /* Lite ljusare blå för korten */
+            --accent-green: #00ffa6; /* Neongrön/Mint */
+            --text-light: #f4f4f4;
+            --text-muted: #8ab4f8;
+            --border-color: #003057;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            background-color: var(--bg);
-            color: white;
             font-family: 'Inter', sans-serif;
-            /* Extra lång för att tillåta massor av scroll */
-            height: 500vh; 
-            overflow-x: hidden;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
         }
 
-        /* Den fasta viewporten som fungerar som vår "kameralins" */
-        #viewport {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-            background: #000;
+        h1, h2, h3 { font-family: 'Montserrat', sans-serif; text-transform: uppercase; }
+
+        /* --- NAME MODAL --- */
+        #nameModal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 10, 18, 0.95); backdrop-filter: blur(10px);
+            z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px;
         }
 
-        /* Scenerna (Bakgrundsbilderna) */
-        .scene {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            transform: scale(1.1); /* Starta lite inzoomad */
-            will-change: opacity, transform;
+        .modal-content {
+            background: var(--card-bg); border: 2px solid var(--accent-green);
+            border-radius: 16px; padding: 40px 30px; max-width: 450px; width: 100%; text-align: center;
         }
 
-        /* Overlay för att göra texten läsbar */
-        .overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 100%);
-            z-index: 5;
+        .modal-content i { font-size: 3rem; color: var(--accent-green); margin-bottom: 20px; }
+        .modal-content h2 { color: var(--text-light); margin-bottom: 10px; font-size: 1.8rem; }
+        .modal-content p { color: var(--text-muted); margin-bottom: 25px; }
+
+        .modal-content input {
+            width: 100%; padding: 15px; border-radius: 8px;
+            border: 1px solid var(--border-color); background: #000; color: #fff;
+            font-size: 1.1rem; text-align: center; text-transform: uppercase; margin-bottom: 20px; outline: none;
         }
 
-        /* Innehållsbehållare för texten i varje scen */
-        .content {
-            position: absolute;
-            bottom: 10%;
-            left: 5%;
-            width: 90%;
-            max-width: 800px;
-            z-index: 10;
-            opacity: 0;
-            transform: translateY(50px);
-            will-change: opacity, transform;
+        .modal-content input:focus { border-color: var(--accent-green); }
+
+        .btn-green {
+            width: 100%; padding: 15px; border: none; border-radius: 8px;
+            background: var(--accent-green); color: #000; font-size: 1.1rem;
+            font-family: 'Montserrat', sans-serif; font-weight: 900; cursor: pointer; transition: 0.3s;
+        }
+        .btn-green:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 255, 166, 0.3); }
+
+        /* --- MAIN SITE --- */
+        .container {
+            max-width: 800px; margin: 0 auto; padding: 40px 20px 120px 20px;
+            display: none; /* Gömd från start */
         }
 
-        h1, h2 {
-            font-family: 'Montserrat', sans-serif;
-            text-transform: uppercase;
-            line-height: 1;
-            margin-bottom: 15px;
+        header { text-align: center; margin-bottom: 40px; }
+        header .badge {
+            display: inline-block; background: rgba(0, 255, 166, 0.1); border: 1px solid var(--accent-green);
+            color: var(--accent-green); padding: 5px 15px; border-radius: 50px; font-weight: 700; margin-bottom: 15px;
         }
+        header h1 { font-size: 3rem; margin-bottom: 10px; color: var(--text-light); }
+        header p { font-size: 1.2rem; color: var(--text-muted); }
+        header span { color: var(--accent-green); font-weight: bold; }
 
-        h1 { font-size: clamp(3rem, 8vw, 6rem); color: white; }
-        h2 { font-size: clamp(2rem, 5vw, 4rem); color: var(--accent); }
-        
-        p {
-            font-size: clamp(1.1rem, 2vw, 1.5rem);
-            color: #ccc;
-            max-width: 600px;
-            margin-bottom: 20px;
+        /* --- VIDEO SECTION --- */
+        .video-container {
+            position: relative; padding-bottom: 56.25%; height: 0;
+            border-radius: 12px; overflow: hidden; border: 2px solid var(--border-color);
+            margin-bottom: 50px; background: #000; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
+        .video-container video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-        .hud {
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            z-index: 100;
-            font-family: 'Montserrat', sans-serif;
-            color: var(--accent);
-            font-size: 1.2rem;
-            letter-spacing: 2px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        /* --- SCHEDULE --- */
+        .schedule-title { text-align: center; color: var(--accent-green); margin-bottom: 30px; font-size: 2rem; }
+
+        .day-card {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 12px; padding: 25px; margin-bottom: 30px;
         }
+        .day-card h3 { color: var(--text-light); font-size: 1.5rem; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
+        .day-card h3 span { color: var(--accent-green); }
 
-        .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 100;
-            text-align: center;
-            color: white;
-            font-family: 'Montserrat', sans-serif;
-            animation: bounce 2s infinite;
+        .event { display: flex; gap: 15px; margin-bottom: 15px; }
+        .event i { color: var(--accent-green); font-size: 1.2rem; margin-top: 3px; width: 25px; text-align: center; }
+        .event-info h4 { color: var(--text-light); font-size: 1.1rem; margin-bottom: 5px; }
+        .event-info p { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* --- RSVP --- */
+        .rsvp-bar {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: rgba(0, 10, 18, 0.9); backdrop-filter: blur(10px);
+            padding: 15px; text-align: center; border-top: 1px solid var(--border-color); z-index: 100;
         }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
-            40% { transform: translateY(-20px) translateX(-50%); }
-            60% { transform: translateY(-10px) translateX(-50%); }
-        }
-
         .rsvp-btn {
-            display: inline-block;
-            background: var(--accent);
-            color: black;
-            padding: 20px 40px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 900;
-            text-decoration: none;
-            font-size: 1.2rem;
-            border-radius: 5px;
-            margin-top: 20px;
-            pointer-events: auto; /* Gör den klickbar i den sista scenen */
+            display: inline-block; background: var(--accent-green); color: #000;
+            padding: 15px 30px; border-radius: 50px; font-family: 'Montserrat', sans-serif;
+            font-weight: 900; text-decoration: none; font-size: 1rem; transition: 0.3s;
         }
+        .rsvp-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 255, 166, 0.4); }
+
+        @media (max-width: 600px) { header h1 { font-size: 2.2rem; } }
     </style>
 </head>
 <body>
 
-    <div class="hud">
-        <i class="fa-solid fa-location-crosshairs"></i> <span id="location-tracker">STOCKHOLM</span>
+    <div id="nameModal">
+        <div class="modal-content">
+            <i class="fa-solid fa-golf-ball-tee"></i>
+            <h2>OPERATION GÖTEBORG</h2>
+            <p>18-20 September 2026. Skriv in ditt namn för att se agendan.</p>
+            <form onsubmit="unlockSite(event)">
+                <input type="text" id="userNameInput" placeholder="DITT NAMN" required autocomplete="off">
+                <button type="submit" class="btn-green">LÅS UPP INBJUDAN</button>
+            </form>
+        </div>
     </div>
 
-    <div id="viewport">
-        <div class="overlay"></div>
-        <div class="scroll-indicator" id="scroll-prompt">
-            <p>SCROLLA FÖR ATT STARTA RESAN</p>
-            <i class="fa-solid fa-chevron-down" style="font-size: 2rem; margin-top: 10px; color: var(--accent);"></i>
+    <div class="container" id="mainContainer">
+        
+        <header>
+            <div class="badge">18 - 20 SEPT 2026</div>
+            <h1>GÖTEBORG INVITATIONAL</h1>
+            <p id="greetingText"></p>
+        </header>
+
+        <div class="video-container">
+            <video controls autoplay muted loop playsinline>
+                <source src="http://googleusercontent.com/generated_video_content/2" type="video/mp4">
+                Din webbläsare stöder inte video.
+            </video>
         </div>
 
-        <div class="scene" id="scene-0" style="background-image: url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=2021&auto=format&fit=crop');">
-            <div class="content" id="content-0">
-                <h1>OPERATION<br><span style="color:var(--accent);">GÖTEBORG</span></h1>
-                <p>18-20 September. Bilarna är packade. Flykten från Stockholm har börjat.</p>
+        <h2 class="schedule-title">HELGSCHEMA</h2>
+
+        <div class="day-card">
+            <h3>FREDAG <span>18 SEPT</span></h3>
+            <div class="event">
+                <i class="fa-solid fa-car"></i>
+                <div class="event-info">
+                    <h4>Afterwork & Avfärd</h4>
+                    <p>Bilarna packas och vi rullar från Stockholm mot västkusten.</p>
+                </div>
+            </div>
+            <div class="event">
+                <i class="fa-solid fa-burger"></i>
+                <div class="event-info">
+                    <h4>Ankomst & Käk</h4>
+                    <p>Incheckning, mat och vätskekontroll.</p>
+                </div>
+            </div>
+            <div class="event">
+                <i class="fa-solid fa-champagne-glasses"></i>
+                <div class="event-info">
+                    <h4>Port Du Soleil</h4>
+                    <p>Nattklubb och stök. Obligatorisk närvaro.</p>
+                </div>
             </div>
         </div>
 
-        <div class="scene" id="scene-1" style="background-image: url('https://images.unsplash.com/photo-1566737236500-c8ac43014a67?q=80&w=2070&auto=format&fit=crop');">
-            <div class="content" id="content-1">
-                <h2>PORT DU SOLEIL</h2>
-                <p>Fredag kväll. Infiltration av Trädgår'n. Hård bas, tvivelaktiga beslut och förberedelse inför lördagen.</p>
+        <div class="day-card">
+            <h3>LÖRDAG <span>19 SEPT</span></h3>
+            <div class="event">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <div class="event-info">
+                    <h4>Dormy World of Golf</h4>
+                    <p>Frukost, resorb och traditionell gear-restock. Nya bollar att slå bort.</p>
+                </div>
+            </div>
+            <div class="event">
+                <i class="fa-solid fa-golf-ball-tee"></i>
+                <div class="event-info">
+                    <h4>Vallda GK eller Hills Golf</h4>
+                    <p>18 hål. Dags att backa upp skitsnacket på riktigt gräs.</p>
+                </div>
+            </div>
+            <div class="event">
+                <i class="fa-solid fa-beer-mug-empty"></i>
+                <div class="event-info">
+                    <h4>Middag & Ölkväll</h4>
+                    <p>Riktigt bra kött, kall öl och diskussioner om vem som faktiskt vann längsta driven.</p>
+                </div>
             </div>
         </div>
 
-        <div class="scene" id="scene-2" style="background-image: url('https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?q=80&w=2070&auto=format&fit=crop');">
-            <div class="content" id="content-2">
-                <h2>VALLDA GK / HILLS</h2>
-                <p>Lördag. Efter obligatorisk plånbokstömming på Dormy är det dags att backa upp skitsnacket från igår på riktigt gräs.</p>
+        <div class="day-card">
+            <h3>SÖNDAG <span>20 SEPT</span></h3>
+            <div class="event">
+                <i class="fa-solid fa-flag"></i>
+                <div class="event-info">
+                    <h4>Sista rundan: Stannum GK</h4>
+                    <p>Domedagen. Sista chansen att rädda resultatet.</p>
+                </div>
+            </div>
+            <div class="event">
+                <i class="fa-solid fa-trophy"></i>
+                <div class="event-info">
+                    <h4>Prisutdelning</h4>
+                    <p>Helgens mästare koras. Förlorarna swishar.</p>
+                </div>
+            </div>
+            <div class="event">
+                <i class="fa-solid fa-house"></i>
+                <div class="event-info">
+                    <h4>Hemfärd</h4>
+                    <p>Reträtt tillbaka till Stockholm.</p>
+                </div>
             </div>
         </div>
 
-        <div class="scene" id="scene-3" style="background-image: url('https://images.unsplash.com/photo-1535136104868-b80c102aae35?q=80&w=2070&auto=format&fit=crop');">
-            <div class="content" id="content-3">
-                <h2>DOMEDAGEN</h2>
-                <p>Söndag på Stannum GK. Sista rundan. Vem tar pokalen och vem kör hem i skam?</p>
-                <a href="sms:0727055996" class="rsvp-btn">JAG ÄR PÅ (072 705 5996)</a>
-            </div>
-        </div>
+    </div>
+
+    <div class="rsvp-bar">
+        <a id="smsLink" href="#" class="rsvp-btn">SVARA WILLIAM I FALL DU KAN (FÖRST TILL KVARN)</a>
     </div>
 
     <script>
-        const scenes = document.querySelectorAll('.scene');
-        const contents = document.querySelectorAll('.content');
-        const tracker = document.getElementById('location-tracker');
-        const scrollPrompt = document.getElementById('scroll-prompt');
-        const totalScenes = scenes.length;
-        
-        const locations = ["STOCKHOLM", "TRÄDGÅR'N", "VALLDA GK", "STANNUM GK"];
-
-        // Funktion som körs varje gång användaren scrollar
-        window.addEventListener('scroll', () => {
-            // Dölj scroll-indikatorn när man börjar scrolla
-            if(window.scrollY > 50) scrollPrompt.style.opacity = 0;
-            else scrollPrompt.style.opacity = 1;
-
-            // Räkna ut hur långt ner på sidan vi har scrollat (0 till 1)
-            const scrollFraction = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+        function unlockSite(e) {
+            e.preventDefault();
+            const name = document.getElementById('userNameInput').value.trim().toUpperCase();
             
-            // Räkna ut vilken scen vi befinner oss i
-            const currentSceneIndex = Math.min(
-                totalScenes - 1,
-                Math.floor(scrollFraction * totalScenes)
-            );
-
-            // Uppdatera HUD
-            tracker.innerText = locations[currentSceneIndex];
-
-            // Räkna ut hur långt vi är *inuti* den aktuella scenen (0 till 1)
-            const sceneProgress = (scrollFraction * totalScenes) % 1;
-
-            scenes.forEach((scene, index) => {
-                const content = contents[index];
+            if(name) {
+                document.getElementById('nameModal').style.display = 'none';
+                document.getElementById('mainContainer').style.display = 'block';
+                document.getElementById('greetingText').innerHTML = `Tjena <span>${name}</span>. Här är planen för helgen.`;
                 
-                if (index === currentSceneIndex) {
-                    // SCENEN ÄR AKTIV
-                    // Tona in scenen
-                    scene.style.opacity = Math.min(sceneProgress * 3, 1); // Snabb fade in
-                    
-                    // Zoom-effekt (Simulerar att köra framåt)
-                    const scale = 1.1 + (sceneProgress * 0.15);
-                    scene.style.transform = `scale(${scale})`;
-
-                    // Tona in och glid upp texten
-                    if(sceneProgress > 0.2) {
-                        const textProgress = (sceneProgress - 0.2) * 1.5;
-                        content.style.opacity = Math.min(textProgress * 2, 1);
-                        const yOffset = Math.max(50 - (textProgress * 100), 0);
-                        content.style.transform = `translateY(${yOffset}px)`;
-                    } else {
-                        content.style.opacity = 0;
-                        content.style.transform = `translateY(50px)`;
-                    }
-
-                } else if (index === currentSceneIndex - 1) {
-                    // FÖREGÅENDE SCEN (För att skapa en mjuk övergång)
-                    scene.style.opacity = Math.max(1 - (sceneProgress * 3), 0);
-                    content.style.opacity = 0;
-                } else {
-                    // ALLA ANDRA SCENER ÄR GÖMDA
-                    scene.style.opacity = 0;
-                    content.style.opacity = 0;
-                }
-            });
-            
-            // Hantera sista scenens slut-läge (så den inte försvinner när vi bottnar scrollen)
-            if (scrollFraction >= 0.99) {
-                scenes[totalScenes - 1].style.opacity = 1;
-                contents[totalScenes - 1].style.opacity = 1;
-                contents[totalScenes - 1].style.transform = `translateY(0px)`;
+                const msg = encodeURIComponent(`Tjena William! Det är ${name}. Jag är på angående Göteborg 18-20 Sept!`);
+                document.getElementById('smsLink').href = `sms:0727055996?body=${msg}`;
             }
-        });
-
-        // Tvinga en initial uppdatering för att ladda första bilden
-        window.dispatchEvent(new Event('scroll'));
+        }
     </script>
 </body>
 </html>
