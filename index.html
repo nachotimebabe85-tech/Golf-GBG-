@@ -9,7 +9,7 @@
 
     <style>
         :root {
-            --gbg-blue: #002B5C; /* Klassisk marinblå */
+            --gbg-blue: #002B5C;
             --gbg-light-blue: #E6F0FA;
             --white: #FFFFFF;
             --off-white: #F9FAFB;
@@ -41,6 +41,7 @@
             background: var(--white); border: 2px solid var(--border-color);
             border-radius: 4px; max-width: 600px; width: 100%;
             box-shadow: 0 20px 40px rgba(0,0,0,0.3); overflow: hidden;
+            transition: transform 0.2s ease;
         }
 
         .scorecard-header {
@@ -70,16 +71,15 @@
         .btn-blue {
             background: var(--gbg-blue); color: var(--white); border: none; padding: 12px 30px;
             font-size: 1rem; font-weight: 600; border-radius: 4px; cursor: pointer; transition: 0.3s;
-            font-family: 'Inter', sans-serif; letter-spacing: 1px;
+            font-family: 'Inter', sans-serif; letter-spacing: 1px; width: 100%; max-width: 300px;
         }
         .btn-blue:hover { background: #001f42; }
 
-        .error-msg { color: #DC2626; font-size: 0.9rem; margin-top: 10px; display: none; font-weight: 600; }
+        .error-msg { color: #DC2626; font-size: 0.9rem; margin-top: 15px; display: none; font-weight: 600; }
 
         /* --- MAIN SITE --- */
         .container { max-width: 800px; margin: 0 auto; padding: 0 20px 120px 20px; display: none; }
 
-        /* --- HEADER & VIDEO --- */
         .hero-section { text-align: center; padding: 60px 0 40px 0; }
         .hero-section h1 { font-size: 3.5rem; color: var(--gbg-blue); line-height: 1.1; margin-bottom: 15px; }
         .hero-section p.subtitle { font-size: 1.2rem; color: var(--text-muted); font-style: italic; }
@@ -92,7 +92,6 @@
         }
         .video-container video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
 
-        /* --- SCHEDULE CARDS --- */
         .schedule-header { text-align: center; color: var(--gbg-blue); font-size: 2.5rem; margin-bottom: 40px; }
 
         .day-card {
@@ -115,7 +114,6 @@
         .event-info h4 { color: var(--text-dark); font-size: 1.15rem; margin-bottom: 5px; font-family: 'Inter', sans-serif; font-weight: 600; }
         .event-info p { color: var(--text-muted); font-size: 1rem; }
 
-        /* --- FOOTER RSVP --- */
         .footer-rsvp {
             text-align: center; padding: 50px 20px; background: var(--gbg-blue); color: var(--white);
             margin-top: 40px; border-radius: 8px; box-shadow: 0 10px 20px rgba(0, 43, 92, 0.2);
@@ -135,6 +133,7 @@
             .day-card { padding: 25px 20px; }
             table.scorecard { font-size: 0.7rem; }
             table.scorecard th, table.scorecard td { padding: 4px; }
+            .day-card h3 { flex-direction: column; align-items: flex-start; gap: 5px; }
         }
     </style>
 </head>
@@ -158,13 +157,14 @@
                 </table>
             </div>
 
-            <div class="player-entry">
+            <form class="player-entry" onsubmit="checkPlayer(event)">
                 <label for="playerName">PLAYER IDENTIFICATION:</label>
-                <input type="text" id="playerName" placeholder="SKRIV DITT NAMN" autocomplete="off" onkeypress="handleKeyPress(event)">
+                <input type="text" id="playerName" placeholder="SKRIV DITT NAMN" autocomplete="off" required>
                 <br>
-                <button class="btn-blue" onclick="checkPlayer()">TEE OFF</button>
+                <button type="submit" class="btn-blue">TEE OFF</button>
                 <p class="error-msg" id="errorMsg">Icke godkänd spelare. Kontakta tävlingsledningen.</p>
-            </div>
+            </form>
+
         </div>
     </div>
 
@@ -216,4 +216,85 @@
                 <i class="fa-solid fa-bag-shopping"></i>
                 <div class="event-info">
                     <h4>Dormy World of Golf</h4>
-                    <p>Frukost föl
+                    <p>Frukost följt av traditionell material-uppgradering. Nytt för i år: Köp bollar du har råd att slå bort.</p>
+                </div>
+            </div>
+            <div class="event">
+                <i class="fa-solid fa-golf-ball-tee"></i>
+                <div class="event-info">
+                    <h4>Tee Time: Vallda GK / Hills</h4>
+                    <p>18 hål mästerskapsgolf. Scorekorten ska fyllas och nerverna testas.</p>
+                </div>
+            </div>
+            <div class="event">
+                <i class="fa-solid fa-utensils"></i>
+                <div class="event-info">
+                    <h4>Bankett & Analys</h4>
+                    <p>En välförtjänt middag med tillhörande dryck. Den officiella genomgången av dagens värsta och bästa slag.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card">
+            <h3>Championship Sunday <span>SÖNDAG 20 SEPT</span></h3>
+            <div class="event">
+                <i class="fa-solid fa-flag"></i>
+                <div class="event-info">
+                    <h4>Finalrunda: Stannum GK</h4>
+                    <p>Vinnarna sållas från förlorarna. Den sista chansen att justera placeringen i fältet.</p>
+                </div>
+            </div>
+            <div class="event">
+                <i class="fa-solid fa-trophy"></i>
+                <div class="event-info">
+                    <h4>Prisutdelning</h4>
+                    <p>Pokalen delas ut till årets mästare. De övriga står för gratulationer (och bensinpengar).</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-rsvp">
+            <h2>OSA WILLIAM</h2>
+            <p>Först till kvarn. Max 8 personer kan delta på touren.</p>
+            <a id="smsLink" href="#" class="rsvp-btn-large">
+                <i class="fa-solid fa-envelope" style="margin-right: 8px;"></i> BEKRÄFTA DELTAGANDE
+            </a>
+        </div>
+
+    </div>
+
+    <script>
+        const allowedPlayers = [
+            "SEBASTIAN", "LUDVIG", "ANTON", "RICKARD", 
+            "HAMPUS", "MARTIN", "JAKOB", "SIMON", 
+            "OLLE", "WILLIAM"
+        ];
+
+        // e är eventet från submit-knappen
+        function checkPlayer(e) {
+            e.preventDefault(); // Hindrar webbläsaren från att ladda om sidan!
+            
+            const inputName = document.getElementById('playerName').value.trim().toUpperCase();
+            const errorMsg = document.getElementById('errorMsg');
+            
+            if (allowedPlayers.includes(inputName)) {
+                // Rätt namn
+                document.getElementById('scorecardModal').style.display = 'none';
+                document.getElementById('mainContainer').style.display = 'block';
+                
+                document.getElementById('greetingText').innerText = `Välkommen till första tee, ${inputName}.`;
+                
+                const msg = encodeURIComponent(`Tjena William! Det är ${inputName}. Jag hugger en av de 8 platserna till Göteborg Invitational!`);
+                document.getElementById('smsLink').href = `sms:0727055996?body=${msg}`;
+            } else {
+                // Fel namn -> Visa felmeddelande och skaka rutan
+                errorMsg.style.display = 'block';
+                const modal = document.querySelector('.scorecard-container');
+                modal.style.transform = 'translateX(-10px)';
+                setTimeout(() => modal.style.transform = 'translateX(10px)', 100);
+                setTimeout(() => modal.style.transform = 'translateX(0)', 200);
+            }
+        }
+    </script>
+</body>
+</html>
