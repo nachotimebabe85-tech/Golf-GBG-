@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;700;900&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@300;400;700;900&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -19,6 +19,7 @@
             --bg-cream: #F9F8F6;
             --text-dark: #111827;
             --paper-color: #F1EDE2; 
+            --border-color: rgba(0, 43, 92, 0.15);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -39,14 +40,13 @@
             overflow: hidden;
         }
 
-        /* Bulletproof Bakgrund - Bild blandad med färg */
         .gatekeeper-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(0, 43, 92, 0.95);
             background-image: url('https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?q=80&w=2070&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
-            background-blend-mode: multiply; /* Gör bilden mörk och stämningsfull */
+            background-blend-mode: multiply;
             z-index: -1; 
         }
 
@@ -66,11 +66,9 @@
                 radial-gradient(circle at 30% 20%, rgba(139,92,26,0.04) 0%, transparent 40%),
                 radial-gradient(circle at 80% 70%, rgba(0,0,0,0.03) 0%, transparent 30%);
             
-            /* SÄKERHETSUPPDATERING: Synlig som standard ifall JS strular */
             opacity: 1; transform: translateY(0);
         }
 
-        /* Falsk kaffefläck på kortet */
         .coffee-stain {
             position: absolute; background: transparent;
             width: 90px; height: 85px; border-radius: 50%;
@@ -103,7 +101,6 @@
             font-family: 'Caveat', cursive; padding-bottom: 2px; text-transform: uppercase;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
-        .scorecard-box input::placeholder { color: rgba(0,0,0,0.15); text-shadow: none; }
 
         .btn-submit {
             background: var(--gbg-blue); color: white; border: none; padding: 14px 35px;
@@ -115,269 +112,56 @@
 
         .error-msg { color: #b91c1c; font-size: 0.85rem; margin-top: 15px; display: none; font-weight: 700; font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 0.5px; }
 
-        /* --- MAIN LAYOUT --- */
+        /* --- MAIN SITE --- */
         #mainContent { display: none; }
-        .smooth-scroll { width: 100%; }
+        
+        /* NY FIX: Mobilanpassad hjälpklass för texten */
+        .content-wrapper {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
         .hero {
             height: 100vh; display: flex; flex-direction: column; 
             justify-content: center; align-items: center; text-align: center; padding: 20px;
         }
-        .hero h1 { font-size: clamp(3.5rem, 8vw, 6rem); color: var(--gbg-blue); line-height: 1; text-transform: uppercase; }
-        .hero p.welcome-msg { font-size: 1.2rem; letter-spacing: 2px; text-transform: uppercase; margin-top: 30px; color: var(--text-dark); font-weight: 700; }
+        /* UPPDATERAD: Mobilanpassad fontstorlek som inte bryter fult på telefonen */
+        .hero h1 { font-size: clamp(2.3rem, 7vw, 5.5rem); color: var(--gbg-blue); line-height: 1.1; text-transform: uppercase; letter-spacing: -1px; }
+        .hero p.welcome-msg { font-size: 1.1rem; letter-spacing: 2px; text-transform: uppercase; margin-top: 30px; color: var(--text-dark); font-weight: 700; }
         .hero p.date { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.2rem; margin-top: 10px; opacity: 0.7; }
 
+        /* NY DESIGN UTAN BILDER (Masters Program-stil) */
         .section-container {
-            max-width: 1200px; margin: 0 auto; padding: 120px 20px;
-            display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: center;
+            padding: 100px 0;
+            border-bottom: 1px solid var(--border-color);
         }
-        .section-container.reverse { grid-template-columns: 1.2fr 1fr; }
+        .section-container:last-of-type { border-bottom: none; }
 
         .text-side { opacity: 0; transform: translateY(40px); }
-        .text-side h2 { font-size: 3.5rem; color: var(--gbg-blue); margin-bottom: 10px; line-height: 1.1; }
-        .text-side h3 { font-family: 'Inter', sans-serif; font-size: 1rem; color: #6b7280; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; }
+        .text-side h3 { font-family: 'Inter', sans-serif; font-size: 0.9rem; color: #6b7280; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 10px; font-weight: 700; }
+        .text-side h2 { font-size: clamp(2.5rem, 5vw, 3.5rem); color: var(--gbg-blue); margin-bottom: 40px; line-height: 1.1; border-left: 3px solid var(--gbg-blue); padding-left: 20px; }
         
-        .event-block { margin-bottom: 30px; }
-        .event-block h4 { font-family: 'Inter', sans-serif; font-size: 1.2rem; color: var(--gbg-blue); margin-bottom: 8px; font-weight: 700; }
-        .event-block p { font-size: 1.05rem; line-height: 1.7; color: #4b5563; }
+        .event-block { margin-bottom: 45px; }
+        .event-block:last-child { margin-bottom: 0; }
+        .event-block h4 { font-family: 'Inter', sans-serif; font-size: 1.2rem; color: var(--gbg-blue); margin-bottom: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+        .event-block p { font-size: 1.1rem; line-height: 1.75; color: #374151; font-weight: 400; }
 
-        .image-side {
-            position: relative; width: 100%; height: 600px; overflow: hidden;
-            border-radius: 4px; box-shadow: 0 20px 40px rgba(0, 43, 92, 0.08);
-        }
-        .image-side img {
-            width: 100%; height: 120%; object-fit: cover; position: absolute; top: 0; left: 0;
-            will-change: transform;
-        }
+        .divider { width: 40px; height: 1px; background: var(--gbg-blue); margin: 0 auto; opacity: 0.4; }
 
-        .divider { width: 1px; height: 100px; background: var(--gbg-blue); margin: 0 auto; opacity: 0.3; }
-
-        .rsvp-section { text-align: center; padding: 150px 20px 100px 20px; background: #fff; border-top: 1px solid var(--border); }
-        .rsvp-section h2 { font-size: 4rem; color: var(--gbg-blue); margin-bottom: 15px; }
-        .rsvp-section p { font-size: 1.1rem; margin-bottom: 40px; color: #4b5563; max-width: 500px; margin-left: auto; margin-right: auto; }
+        /* RSVP SECTION */
+        .rsvp-section { text-align: center; padding: 150px 20px 120px 20px; background: #fff; border-top: 1px solid var(--border-color); }
+        .rsvp-section h2 { font-size: clamp(2.5rem, 6vw, 4rem); color: var(--gbg-blue); margin-bottom: 20px; text-transform: uppercase; }
+        .rsvp-section p { font-size: 1.15rem; margin-bottom: 40px; color: #4b5563; max-width: 550px; margin-left: auto; margin-right: auto; line-height: 1.6; }
         .btn-rsvp {
             display: inline-block; background: var(--gbg-blue); color: white; padding: 20px 50px;
-            font-size: 1.1rem; font-weight: 700; text-decoration: none; letter-spacing: 1px; transition: 0.3s;
-            border-radius: 2px; text-transform: uppercase;
+            font-size: 1.1rem; font-weight: 700; text-decoration: none; letter-spacing: 1.5px; transition: 0.3s;
+            border-radius: 2px; text-transform: uppercase; box-shadow: 0 4px 15px rgba(0, 43, 92, 0.15);
         }
-        .btn-rsvp:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0, 43, 92, 0.2); }
+        .btn-rsvp:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0, 43, 92, 0.25); }
 
-        @media (max-width: 900px) {
-            .section-container, .section-container.reverse { grid-template-columns: 1fr; gap: 50px; padding: 80px 20px; }
-            .image-side { height: 400px; }
-            .scorecard-table { font-size: 0.6rem; }
-            .scorecard-box input { font-size: 2rem; }
+        @media (max-width: 600px) {
+            .section-container { padding: 60px 0; }
+            .text-side h2 { padding-left: 15px; }
+            .btn-rsvp { width: 100%; text-align: center; padding: 18px 20px; }
         }
-    </style>
-</head>
-<body>
-
-    <div id="scorecardModal">
-        <div class="gatekeeper-overlay"></div>
-
-        <div class="scorecard-box" id="scorecardBox">
-            <div class="coffee-stain"></div>
-            
-            <h2>Official Scorecard</h2>
-            
-            <table class="scorecard-table">
-                <tr>
-                    <th>HOLE</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><th>OUT</th>
-                </tr>
-                <tr>
-                    <th>PAR</th><td>4</td><td>4</td><td>3</td><td>5</td><td>4</td><td>4</td><td>3</td><td>4</td><td>5</td><th>36</th>
-                </tr>
-                <tr class="pencil-text">
-                    <td style="font-family:'Inter'; font-size:0.65rem; font-weight:900; letter-spacing: 0.5px;">SCORE</td>
-                    <td>4</td><td><span class="pencil-square">5</span></td><td>3</td><td>6</td><td><span class="pencil-circle">3</span></td><td>4</td><td>4</td><td>5</td><td>5</td><td>39</td>
-                </tr>
-            </table>
-
-            <table class="scorecard-table">
-                <tr>
-                    <th>HOLE</th><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><th>IN</th>
-                </tr>
-                <tr>
-                    <th>PAR</th><td>4</td><td>3</td><td>4</td><td>5</td><td>4</td><td>3</td><td>4</td><td>4</td><td>5</td><th>36</th>
-                </tr>
-                <tr class="pencil-text">
-                    <td style="font-family:'Inter'; font-size:0.65rem; font-weight:900; letter-spacing: 0.5px;">SCORE</td>
-                    <td>5</td><td>3</td><td><span class="pencil-square">5</span></td><td>5</td><td>4</td><td>4</td><td>4</td><td>6</td><td>-</td><td>-</td>
-                </tr>
-            </table>
-
-            <div class="signature-area">
-                <form onsubmit="unlock(event)">
-                    <label>Attest / Spelarsignatur (Hål 18)</label>
-                    <input type="text" id="playerName" placeholder="Ditt namn..." required autocomplete="off">
-                    <br>
-                    <button type="submit" class="btn-submit">Signera & Slå ut</button>
-                </form>
-                <p id="error" class="error-msg">Startvägrad. Namnet saknas på tourens officiella startlista.</p>
-            </div>
-        </div>
-    </div>
-
-    <div id="mainContent" class="smooth-scroll">
-        
-        <section class="hero">
-            <h1>Göteborg<br>Championship</h1>
-            <p class="welcome-msg" id="welcomeHeader"></p>
-            <p class="date">18 - 20 September 2026</p>
-        </section>
-
-        <div class="divider"></div>
-
-        <section class="section-container">
-            <div class="text-side">
-                <h3>Fredag 18 Sept</h3>
-                <h2>The Insertion</h2>
-                
-                <div class="event-block">
-                    <h4>Bilresan mot västkusten</h4>
-                    <p>Fullpackat med golfbagar, hcp-delusioner och luftmadrasser. 5 timmar i bil där den nya, "helt perfekta" svingen diskuteras i detalj tills alla i bilen blir galna.</p>
-                </div>
-                
-                <div class="event-block">
-                    <h4>Basecamp Jungmansgatan 33B</h4>
-                    <p>Vi kastar in väskorna, glömmer bort logistiken och knäpper en kall bärs omedelbart. Klädkod inför kvällen: Oförskämt stilig.</p>
-                </div>
-
-                <div class="event-block">
-                    <h4>Moreno Pizza & Port Du Soleil</h4>
-                    <p>Middag på Moreno Pizza följt av planerat stök på stan. Vätskekontroller och nattklubb står på menyn.</p>
-                </div>
-            </div>
-            <div class="image-side">
-                <img class="parallax-img" src="fredag-bild.jpg" alt="Bilresa och Basecamp">
-            </div>
-        </section>
-
-        <section class="section-container reverse" style="direction: rtl;">
-            <div class="text-side" style="direction: ltr;">
-                <h3>Lördag 19 Sept</h3>
-                <h2>Moving Day</h2>
-                
-                <div class="event-block">
-                    <h4>Frukost & Materialfel</h4>
-                    <p>Vi hämtar frulle runt hörnet. Sen startar vi lördagens tradition: Avfärd mot Dormy World of Golf för obligatorisk gear-restock. Det är statistiskt garanterat att någon missar väjningsplikten på vägen dit, och OBLIGATORISKT att minst en köper en ny klubba för att rädda helgen.</p>
-                </div>
-
-                <div class="event-block">
-                    <h4>The Battle: Vallda GK / Hills</h4>
-                    <p>Två toppbanor (ni önskar själva till mij innan). I vanlig ordning spelas Scramble om inget annat fegt önskemål inkommit. 18 hål där skitsnacket ska backas upp på riktigt gräs.</p>
-                </div>
-
-                <div class="event-block">
-                    <h4>Post-game & Biljardpalatset</h4>
-                    <p>Efter-runda-snack på restaurang följt av Göteborgs svar på Biljardpalatset. Barrunda med respekt för de som ska köra dagen efter – alkohol-pacen är valfri, bärsen är kall.</p>
-                </div>
-            </div>
-            <div class="image-side" style="direction: ltr;">
-                <img class="parallax-img" src="lordag-bild.jpg" alt="Golf och Dormy">
-            </div>
-        </section>
-
-        <section class="section-container">
-            <div class="text-side">
-                <h3>Söndag 20 Sept</h3>
-                <h2>Championship Sunday</h2>
-                
-                <div class="event-block">
-                    <h4>Operation: Snabbstäd</h4>
-                    <p>Frukost i vanlig ordning. Därefter kör vi "The 10-Minute Clean Express" – ju snabbare vi plockar upp tomburkarna och fäller ihop madrasserna, desto snabbare slipper vi städa. Vi lämnar Basecamp i värdigt skick.</p>
-                </div>
-                
-                <div class="event-block">
-                    <h4>The Finale: Stannum GK</h4>
-                    <p>Lunch i farten, sen slår vi ut för den sista, avgörande rundan på Stannum GK. Det är nu agnarna sållas från vetet.</p>
-                </div>
-
-                <div class="event-block">
-                    <h4>Prisceremoni & Reträtt</h4>
-                    <p>Korande av helgens mästare. Förlorarna står för gratulationer, swish-transfers och bensinpengar under de 5 timmarna hem mot Stockholm.</p>
-                </div>
-            </div>
-            <div class="image-side">
-                <img class="parallax-img" src="sondag-bild.jpg" alt="Finalrundan">
-            </div>
-        </section>
-
-        <section class="rsvp-section">
-            <h2>OSA WILLIAM</h2>
-            <p>10 inbjudna på startlistan. Men logistiken sätter stopp vid 8 – först till kvarn gäller för att säkra sin plats i bussen.</p>
-            <a id="smsLink" href="#" class="btn-rsvp">SÄKRA MIN PLATS</a>
-        </section>
-
-    </div>
-
-    <script>
-        gsap.registerPlugin(ScrollTrigger);
-
-        // Animerar in scorekortet med gsap.from() så det ÄR synligt i CSS men animeras in via JS.
-        // Det gör koden 100% skottsäker.
-        document.addEventListener("DOMContentLoaded", () => {
-            gsap.from("#scorecardBox", { opacity: 0, y: 30, duration: 1.4, ease: "power4.out", delay: 0.2 });
-        });
-
-        const allowed = ["SEBASTIAN", "LUDVIG", "ANTON", "RICKARD", "HAMPUS", "MARTIN", "JAKOB", "SIMON", "OLLE", "WILLIAM"];
-
-        function unlock(e) {
-            e.preventDefault();
-            const name = document.getElementById('playerName').value.trim().toUpperCase();
-            if(allowed.includes(name)) {
-                gsap.to("#scorecardModal", { 
-                    opacity: 0, 
-                    duration: 0.9, 
-                    ease: "power2.inOut",
-                    onComplete: () => {
-                        document.getElementById('scorecardModal').style.display = 'none';
-                        document.getElementById('mainContent').style.display = 'block';
-                        
-                        document.getElementById('welcomeHeader').innerText = `STARTTID BEKRÄFTAD FÖR: ${name}`;
-                        
-                        const msg = encodeURIComponent(`Tjena! Det är ${name}. Jag tar en av platserna till Göteborg Championship! ⛳️`);
-                        document.getElementById('smsLink').href = `sms:0727055996?body=${msg}`;
-                        
-                        initAnimations();
-                    }
-                });
-            } else {
-                const errorEl = document.getElementById('error');
-                errorEl.style.display = 'block';
-                const box = document.querySelector('.scorecard-box');
-                gsap.to(box, { x: [-12, 12, -10, 10, -5, 5, 0], duration: 0.4, ease: "power1.inOut" });
-            }
-        }
-
-        function initAnimations() {
-            gsap.utils.toArray('.text-side').forEach(text => {
-                gsap.to(text, {
-                    scrollTrigger: {
-                        trigger: text,
-                        start: "top 85%",
-                        toggleActions: "play none none none"
-                    },
-                    opacity: 1,
-                    y: 0,
-                    duration: 1.2,
-                    ease: "power3.out"
-                });
-            });
-
-            gsap.utils.toArray('.parallax-img').forEach(img => {
-                gsap.to(img, {
-                    scrollTrigger: {
-                        trigger: img.parentElement,
-                        start: "top bottom",
-                        end: "bottom top",
-                        scrub: true
-                    },
-                    y: "15%",
-                    ease: "none"
-                });
-            });
-        }
-    </script>
-</body>
-</html>
